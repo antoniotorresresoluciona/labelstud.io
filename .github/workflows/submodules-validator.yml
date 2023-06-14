@@ -30,16 +30,16 @@ jobs:
         with:
           script: |
             const {repo, owner} = context.repo;
+            const repository_owner = process.env.GITHUB_REPOSITORY_OWNER;
             const head_sha = '${{ github.event.pull_request.head.sha || github.event.after }}'
             const base_sha = '${{ github.event.pull_request.base.sha || github.event.before }}'
             const targetBranch = '${{ github.event.pull_request.base.ref || github.event.ref }}'.replace('refs/heads/', '')
             const strictCheckBranchPrefixes = ['ls-release/']
 
             let submodules = [
-                {owner: 'heartexlabs', repo: 'label-studio-frontend'},
-                {owner: 'heartexlabs', repo: 'dm2'}
+                {owner: owner, repo: 'label-studio-frontend'},
+                {owner: owner, repo: 'dm2'}
             ]
-            
             
             async function getLSSubmoduleVersions(sha) {
                 let {data: lsTreeData} = await github.rest.git.getTree({

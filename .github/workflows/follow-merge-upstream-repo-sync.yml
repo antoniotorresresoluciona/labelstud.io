@@ -323,12 +323,13 @@ jobs:
           github-token: ${{ secrets.GIT_PAT }}
           result-encoding: string
           script: |
+            const { repo, owner } = context.repo;
             const branchName = '${{ steps.get-branch.outputs.name }}';
             const branchNameLowerCase = branchName.toLowerCase();
 
             const submodules = [
-              { owner: 'heartexlabs', repo: 'label-studio-frontend' },
-              { owner: 'heartexlabs', repo: 'dm2' }
+              { owner: owner, repo: 'label-studio-frontend' },
+              { owner: owner, repo: 'dm2' }
             ]
             let openPRs = []  
             for (let submodule of submodules) {
